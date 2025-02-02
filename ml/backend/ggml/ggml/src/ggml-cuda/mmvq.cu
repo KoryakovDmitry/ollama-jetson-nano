@@ -3,7 +3,7 @@
 
 typedef float (*vec_dot_q_cuda_t)(const void * __restrict__ vbq, const block_q8_1 * __restrict__ bq8_1, const int & kbx, const int & iqs);
 
-static constexpr __device__ vec_dot_q_cuda_t get_vec_dot_q_cuda(ggml_type type) {
+static __device__ const vec_dot_q_cuda_t get_vec_dot_q_cuda(ggml_type type) {
     return type == GGML_TYPE_Q4_0 ? vec_dot_q4_0_q8_1 :
         type == GGML_TYPE_Q4_1 ? vec_dot_q4_1_q8_1 :
         type == GGML_TYPE_Q5_0 ? vec_dot_q5_0_q8_1 :
@@ -26,7 +26,7 @@ static constexpr __device__ vec_dot_q_cuda_t get_vec_dot_q_cuda(ggml_type type) 
         nullptr;
 }
 
-static constexpr __device__ int get_vdr_mmvq(ggml_type type) {
+static __device__ const int get_vdr_mmvq(ggml_type type) {
     return type == GGML_TYPE_Q4_0 ? VDR_Q4_0_Q8_1_MMVQ :
         type == GGML_TYPE_Q4_1    ? VDR_Q4_1_Q8_1_MMVQ :
         type == GGML_TYPE_Q5_0    ? VDR_Q5_0_Q8_1_MMVQ :

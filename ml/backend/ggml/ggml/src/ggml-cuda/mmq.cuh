@@ -95,7 +95,7 @@ static constexpr int get_mmq_x_max_host(const int cc) {
 #endif // GGML_CUDA_FORCE_MMQ
 }
 
-static constexpr __device__ int get_mmq_x_max_device() {
+static __device__ const int get_mmq_x_max_device() {
 #ifdef INT8_MMA_AVAILABLE
     return 128;
 #else // INT8_MMA_AVAILABLE
@@ -123,7 +123,7 @@ static constexpr int get_mmq_y_host(const int cc) {
     return cc >= GGML_CUDA_CC_OFFSET_AMD ? (cc == GGML_CUDA_CC_RDNA1 ? 64 : 128) : (cc >= GGML_CUDA_CC_VOLTA ? 128 : 64);
 }
 
-static constexpr __device__ int get_mmq_y_device() {
+static __device__ const int get_mmq_y_device() {
 #if defined(GGML_USE_HIP) && defined(__HIP_PLATFORM_AMD__)
 #if defined(RDNA1)
     return 64;
@@ -213,11 +213,11 @@ static int mmq_get_granularity_host(const int mmq_x, const int cc) {
 }
 
 #ifdef INT8_MMA_AVAILABLE
-static constexpr __device__ int mmq_get_granularity_device(const int mmq_x) {
+static __device__ const int mmq_get_granularity_device(const int mmq_x) {
     return mmq_x >= 48 ? 16 : 8;
 }
 #else
-static constexpr __device__ int mmq_get_granularity_device(const int /* mmq_x */) {
+static __device__ const int mmq_get_granularity_device(const int /* mmq_x */) {
     return 8;
 }
 #endif // INT8_MMA_AVAILABLE
